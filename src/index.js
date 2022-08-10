@@ -1,6 +1,6 @@
 import store from "./store";
 import * as actions from './actionTypes';
-import { bugAdded } from "./actions";
+import { bugAdded, bugResolved } from "./actions";
 
 const unsubscribe = store.subscribe(() => {
     console.log("Store changed!", store.getState());
@@ -18,6 +18,7 @@ const unsubscribe = store.subscribe(() => {
 // Refactor dispatch code for BUG_ADDED for cleaner code than the one above. Must have action creators and import them.
 store.dispatch(bugAdded("Bug 1"));
 
+store.dispatch(bugResolved(1));
 
 unsubscribe(); // If you call this function here, we won't get notified on the bugRemoved action below. 
 

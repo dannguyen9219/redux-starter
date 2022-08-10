@@ -30,8 +30,14 @@ export default function reducer(state = [], action) {
                     resolved: false,
                 }
             ];
+        
         case actions.BUG_REMOVED:
             return state.filter(bug => bug.id !== action.payload.id);
+        
+        case actions.BUG_RESOLVED:
+            return state.map(bug => 
+                bug.id !== action.payload.id ? bug : {...bug, resolved: true});
+                // takes a bug, if the id of the bug does not equal the action.payload.id, then we just want to return the bug as is. Otherwise, we want to take a copy of this bug with all of its properties, and updating the resolved to true
         default:
             return state;
     }
