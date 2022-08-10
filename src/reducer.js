@@ -1,4 +1,6 @@
 // Assume that there's an empty array for bugs
+// import { BUG_ADDED, BUG_REMOVE} from './actionTypes';
+import * as actions from './actionTypes';
 
 let lastId = 0;
 
@@ -19,7 +21,7 @@ export default function reducer(state = [], action) {
 
     // Using switch and case
     switch (action.type) {
-        case "bugAdded":
+        case actions.BUG_ADDED:
             return [
                 ...state,
                 {
@@ -28,9 +30,10 @@ export default function reducer(state = [], action) {
                     resolved: false,
                 }
             ];
-        case "bugRemoved":
+        case actions.BUG_REMOVED:
             return state.filter(bug => bug.id !== action.payload.id);
         default:
             return state;
     }
 };
+// This reducer function is called from index.js, which called store.js where this reducer lies. 
