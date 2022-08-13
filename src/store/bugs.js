@@ -1,4 +1,4 @@
-import { createAction } from "@reduxjs/toolkit";
+import { createAction, createReducer } from "@reduxjs/toolkit";
 
 // Action Creators
 export const bugAdded = createAction("bugAdded");
@@ -13,29 +13,21 @@ export const bugRemoved = createAction("bugRemoved");
 // Reducer
 let lastId = 0;
 
-export default function reducer(state = [], action) {
+export default createReducer([], {
+    // key: value
+    // actions: functions (event => event handler)
+    [bugAdded.type]: (bugs, action) => {
+        bugs.push(
+            {
+                id: ++lastId,
+                description: action.payload.description,
+                resolved: false,
+            }
+        )
+    },
 
-    // Using switch and case
-    switch (action.type) {
-        case bugAdded.type:
-            return [
-                ...state,
-                {
-                    id: ++lastId,
-                    description: action.payload.description,
-                    resolved: false,
-                }
-            ];
-        
-        case bugRemoved.type:
-            return state.filter(bug => bug.id !== action.payload.id);
-        
-        case bugResolved.type:
-            return state.map(bug => 
-                bug.id !== action.payload.id ? bug : {...bug, resolved: true});
-                // takes a bug, if the id of the bug does not equal the action.payload.id, then we just want to return the bug as is. Otherwise, we want to take a copy of this bug with all of its properties, and updating the resolved to true
-        default:
-            return state;
+    [bugResolved.type]: (bugs, action) => {
+        const index = bugs.findIndex(bug => bug.id === action.payload.id);
+        bugs[index].resolved = true;
     }
-};
-// This reducer function is called from index.js, which called store.js where this reducer lies. 
+});
