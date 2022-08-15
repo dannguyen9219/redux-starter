@@ -72,3 +72,13 @@ store.dispatch({
     type: "error",
     payload: { message: "An error occurred."}
 });
+
+// Consuming API
+store.dispatch({
+    type: 'apiCallBegan',
+    payload: {
+        onSuccess: 'bugsReceived',
+        onError: 'apiRequestFailed',
+        url: '/bugs',
+    }
+});

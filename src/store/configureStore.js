@@ -6,6 +6,7 @@ import reducer from "./reducer";
 import logger from "./middleware/logger";
 import func from "./middleware/functions";
 import toast from "./middleware/toast";
+import api from "./middleware/api";
 
 export default function() {
     return configureStore({
@@ -14,6 +15,7 @@ export default function() {
             logger({ destination: "console" }),
             func,
             toast,
+            api,
         ]
     });
 };
